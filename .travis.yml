@@ -1,0 +1,41 @@
+language: python
+branches:
+  only:
+  - master
+  - "/^v\\d+\\.\\d+\\.\\d+$/"
+matrix:
+  include:
+  - os: linux
+    python: 3.6
+  - os: linux
+    python: 3.7
+    dist: xenial
+    sudo: true
+  - os: osx
+    language: generic
+    sudo: true
+    before_cache:
+    - brew cleanup
+    cache:
+      directories:
+      - "$HOME/Library/Caches/Homebrew"
+      - "/Users/travis/.pyenv/versions"
+install: ".travis/install.sh"
+script: ".travis/run.sh"
+after_success:
+- codecov
+notifications:
+  email: false
+before_deploy:
+- pip install --upgrade twine setuptools
+deploy:
+  provider: pypi
+  user: slarse
+  on:
+    tags: true
+    condition: $TRAVIS_OS_NAME = "linux"
+  distributions: sdist bdist_wheel
+  repo: slarse/ondiff
+  skip_existing: true
+  password:
+    secure: mpDY3KDpVLsYypUgyd6tUY6FP3mnNGGXzHjDiGoiH9h0gf9d9YdqLaMymMo46vHpzIED2jZIhGFlG15LOC4PQnQb46+1orRNGwTa+SdnxSB4kE+cCUgE+3XdwThYnbRXgAZKrMUMAZW8QR9pYcBUo9X/OSrwHmBORQpRgTKABF3A9efxSeTHa+68PTwgT27upna5AVLHpgf8EnXf2h2LwE8UJ1tWZ2pyTChZW1OFfG4LfIUot7RYsWH26dXGN2+FsopYTsWAX9mB+T6xxcRuFt5YE4V4QwlVX+s4zdYWyUVjnTI9PFN74deHihd4GioVY489RM+Ibm4c2T++h0D01IDVijUqBkaR47wM2+kO1vbRzqoDIb/O+vTB8ZaGtDpq+HTPh0ux/WsMJFjJ8x/X7xX1FymDrOwKkK0B98InMe40sTBbqNDZmhYuDWnrGhaUXOAXBTrFjqft+chhxpPl3toUX06ZRzaAzmaLk1TXwkb7OgF2aJ5odX1KYZYYx9Xs8JLaMcsKniKmWrmnpeFlW/ok/7I93KBxrusv/XrTp2iyCB/2O+1qQmCN9rMkBiTjel9nEh58QVPyGmqXKeXAwBLc6ydIVsb1pzKXhWj6dLXzxVwKrNhwarlprial5wUfFacQ8/9zArp8lr+ZCBR2VRtFoVFC/gidEJWWwOllNng=
