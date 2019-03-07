@@ -1,4 +1,8 @@
-# example appveyor.yml from https://packaging.python.org/guides/supporting-windows-using-appveyor/
+# based on example appveyor.yml from https://packaging.python.org/guides/supporting-windows-using-appveyor/
+branches:
+  only:
+    - master
+
 environment:
 
   matrix:
@@ -13,7 +17,7 @@ install:
 build: off
 
 test_script:
-  - "%PYTHON%\\python.exe setup.py test"
+  - "%PYTHON%\\python.exe -m pytest tests"
 
 #after_test:
   #- "%PYTHON%\\python.exe setup.py bdist_wheel"
