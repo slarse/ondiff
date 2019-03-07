@@ -1,0 +1,28 @@
+# example appveyor.yml from https://packaging.python.org/guides/supporting-windows-using-appveyor/
+environment:
+
+  matrix:
+    - PYTHON: "C:\\Python36-x64"
+    - PYTHON: "C:\\Python37-x64"
+
+install:
+  # We need wheel installed to build wheels
+  #- "%PYTHON%\\python.exe -m pip install wheel"
+  - "%PYTHON%\\python.exe -m pip install -e .[TEST]"
+
+build: off
+
+test_script:
+  - "%PYTHON%\\python.exe setup.py test"
+
+#after_test:
+  #- "%PYTHON%\\python.exe setup.py bdist_wheel"
+
+#artifacts:
+  # bdist_wheel puts your built wheel in the dist directory
+  #- path: dist\*
+
+#on_success:
+#  You can use this step to upload your artifacts to a public website.
+#  See Appveyor's documentation for more details. Or you can simply
+#  access your wheels from the Appveyor "artifacts" tab for your build.
