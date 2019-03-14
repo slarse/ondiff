@@ -14,9 +14,11 @@ test_requirements = [
     "pytest>=4.0.0",
     "pytest-cov>=2.6.0",
     "pytest-mock",
+    "pytest-asyncio",
+    "asynctest",
     "codecov",
 ]
-required = []
+required = ["dataclasses>=0.6.0;python_version<'3.7'"]
 
 setup(
     name="ondiff",
@@ -39,6 +41,7 @@ setup(
     extras_require=dict(TEST=test_requirements),
     include_package_data=True,
     zip_safe=False,
+    python_requires=">=3.6",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
